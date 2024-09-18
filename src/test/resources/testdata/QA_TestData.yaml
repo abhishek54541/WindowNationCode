@@ -1,0 +1,32 @@
+#This file contains data for QA Environment
+AssignRecruiterSuccessMessage: Recruiter assigned successfully.
+'RecruiterSubMenu:': Settings, Feedback template, Source, Workflow, Letter template, Notification
+RecruiterSettingSubMenu: Settings, Task owner, Due days, Job opening fields, Career portal, LinkedIn
+confirmedUser: EMP2 for test only
+CandDetailPage: Profile, Documents, All activities, Interview Feedback, Knockout Score, Resume Shortlisting, Offer
+CandidateKebabMenuItem: Schedule interview, Download resume, Generate offer letter, Hire, Share for profile completion, Share
+   for document completion, Send message, Notes, Blacklist, Share cv with hiring manager
+shareOptions: Share CV with hiring manager
+resumeOptions: Shortlisted, Rejected, Pending, Hold
+SetStatusFields: Active, Hold, Close
+FeedbackType: Interview feedback, IJP feedback
+WorkforceFeedbackType: Confirmation, Exit interview
+EngageFeedbackType: Survey
+PerformanceFeedbackType: 360 feedback, Performance review
+AddCandidateBtnLabels: Add Candidate, Add Candidate In Bulk
+LocationTabs: Country, State, City, Region, Branch, Sub branch
+OrgStrTabs: Enterprise, Company, Business Unit, Department, Sub department, Designation, Grade, Level
+viewDropdownContentRole: Role view, Employee view
+UserTypeDropdown: Customer, Recruiter, BGV, Vendor, System Consultant, Other
+AmountLimit: Day, Week, Month, Quarter, 6 months, Year, Lifetime
+ClaimFrequency: No Limit, Day, Week, Month, Quarter, 6 months, Year,In a 3 year, Lifetime
+DropDownBaseCurrency : AMD, INR 
+DropDownExchangeCurrency : AMD, AOA, ARS, AUD, AWG, AZN, BAM, BBD, BDT, BGN, BHD, BIF, BMD, BND, BOB, BRL, BSD, BTN, BWP, BYR, BZD, CAD, CDF, CLP, CNY, COP, CRC, CVE, DZD, EUR, GBP, INR, KHR, KMF, KYD, SGD, USD, XAF, XCD, XOF
+RecruiterSubMenu : Settings, Feedback template, Source, Workflow, Letter template, Notification
+SnackbarInitiateReview: Your review request has been reinitiated. Review card will be created in inbox of employees in 1 minutes
+SnackbarInitiateGoal: Your goal request has been reinitiated. Goal card will be created in inbox of employees in 1 minutes
+#UI Data
+internalUser: IND
+#POWER06 (sanity)
+externalUser: EXT0001 
+#EXT07 (sanity)

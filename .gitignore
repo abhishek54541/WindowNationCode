@@ -1,0 +1,10 @@
+/target/
+/target/test-classes/*
+/bin/
+/.settings/
+/allure-results/
+.classpath
+test-output
+.log
+.allure/*
+allure-results/environment.properties
