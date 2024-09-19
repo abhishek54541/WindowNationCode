@@ -9,17 +9,17 @@ import java.util.NoSuchElementException;
 
 import org.junit.Assert;
 
-public class LaunchUrlAndClick extends BaseFunctions {
+public class HomePage_Action extends BaseFunctions {
 
     private WebDriver driver;
 
     // Constructor to initialize the WebDriver
-    public LaunchUrlAndClick(WebDriver driver) {
+    public HomePage_Action(WebDriver driver) {
         super(); // Call the BaseFunctions constructor
         this.driver = driver; // Set the driver
     }
 
-    public void openUrl(String url) {
+    public void launchUrl(String url) {
         if (driver == null) {
             throw new IllegalStateException("WebDriver is not initialized");
         }
