@@ -7,7 +7,10 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import com.qa.automation.actions.LaunchUrlAndClick;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+
+import com.qa.automation.actions.HomePage_Action;
 import com.qa.automation.utils.PropFileHandler;
 
 import java.io.File;
@@ -19,23 +22,23 @@ import java.nio.file.Paths;
 public class Hooks {
 
     private WebDriver driver;
-    private LaunchUrlAndClick launchUrlAndClick;
+    private HomePage_Action launchUrlAndClick;
 
     // Before hook to initialize the browser before each scenario
-    @Before
+    @BeforeTest
     public void setUp(Scenario scenario) {
         System.out.println("Setting up browser for scenario: " + scenario.getName());
 
         // Initialize WebDriver
         driver = new ChromeDriver();
-        launchUrlAndClick = new LaunchUrlAndClick(driver); // Initialize LaunchUrlAndClick with WebDriver
+        launchUrlAndClick = new HomePage_Action(driver); // Initialize LaunchUrlAndClick with WebDriver
 
         // Get the URL from the properties file
         String url = PropFileHandler.readProperty("appUrl");
         if (url != null && !url.isEmpty()) {
             try {
                 // Open the URL
-                launchUrlAndClick.openUrl(url);
+                launchUrlAndClick.launchUrl(url);
                 System.out.println("Opened URL: " + url);
             } catch (Exception e) {
                 System.err.println("Error opening URL: " + e.getMessage());
@@ -46,7 +49,7 @@ public class Hooks {
     }
 
     // After hook to close the browser after each scenario
-    @After
+    @AfterTest
     public void tearDown(Scenario scenario) {
         System.out.println("Tearing down browser for scenario: " + scenario.getName());
 
@@ -57,6 +60,7 @@ public class Hooks {
                 try {
                     // Take a screenshot
                     takeScreenshot(scenario.getName());
+                    driver.quit();
                 } catch (IOException e) {
                     System.err.println("Error taking screenshot: " + e.getMessage());
                 }
