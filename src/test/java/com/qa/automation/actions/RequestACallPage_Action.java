@@ -51,11 +51,7 @@ public class RequestACallPage_Action extends BaseFunctions {
         waitForElementAndClick(element, 10);  // Use method from BaseFunctions
     }
     
-    public void clickOnNextToProceedform() {
-    	System.out.print("Click on next button");
-    	WebElement element = driver.findElement(Locators.NEXT_STEP);
-    	waitForElementAndClick(element, 10);
-    }
+   
     //New 
     public void clickOnRequestACallButton()  {
     	System.out.print("Click on Request a Call button");
@@ -88,91 +84,7 @@ public class RequestACallPage_Action extends BaseFunctions {
     	waitForElementAndClick(element, 10);
     }
     
+}    
     
     
     
-    public void clickOnElement(String locatorType, String locatorValue) {
-        try {
-            By dynamicLocator = getDynamicLocator(locatorType, locatorValue);
-
-            // Locate the element using the constructed locator
-            WebElement element = driver.findElement(dynamicLocator);
-
-            // Wait for the element to be visible before clicking
-            waitForElementToBeVisible(element);
-
-            // Click on the element
-            element.click();
-
-            System.out.println("Clicked on element with " + locatorType + ": " + locatorValue);
-        } catch (Exception e) {
-            System.out.println("Unable to click on element with " + locatorType + ": " + locatorValue);
-            e.printStackTrace();
-        }
-    }
-    
-    
-    /**
-     * Returns a By object based on the locator type.
-     * 
-     * @param locatorType Type of locator (e.g., "text")
-     * @param locatorValue The value of the locator
-     * @return By object corresponding to the locator type and value
-     */
-    
-    private By getDynamicLocator(String locatorType, String locatorValue) {
-        switch (locatorType.toLowerCase()) {
-            case "text":
-                return Locators.getDynamicXPathHowYouKnowBtn(locatorValue);
-            case "anotherText": // Add additional cases as needed
-                return Locators.getDynamicTypesOfProperty(locatorValue);
-            default:
-                throw new IllegalArgumentException("Unsupported locator type: " + locatorType);
-        }
-    }
-    
-    // Enter address for eg - "Address1,Address2,city,State,zipcode"
-    public void enterAddress(String address1,String address2,String city,String state,String zipcode) {
-    	System.out.print("Enter Address (AddressCity, State, Zipcode)");
-    	WebElement element = driver.findElement(Locators.STREET_ADDRESS_1); 
-        waitForElementAndSendKeys(element, address1, 20);  
-        WebElement element_1 = driver.findElement(Locators.STREET_ADDRESS_2);  
-        waitForElementAndSendKeys(element_1, address2, 10); 
-        WebElement element_2 = driver.findElement(Locators.CITY); 
-        waitForElementAndSendKeys(element_2, city, 10);
-        WebElement element_3 = driver.findElement(Locators.STATE); 
-        sendKeysAndEnter(element_3, state, 10);
-        WebElement element_4 = driver.findElement(Locators.ZIPCODE); 
-        waitForElementAndSendKeys(element_4, zipcode, 10);
-        
-    }
-    
-    public void enterNumberOfWindowsAndDoors(String windowCount, String doorCount ) {
-    	// Count of windows and doors
-    	WebElement element = driver.findElement(Locators.ENTER_NUMBER_OF_WINDOWS); 
-        waitForElementAndSendKeys(element, windowCount, 5);
-        clickOnNextToProceedform();
-        WebElement element_1 = driver.findElement(Locators.ENTER_NUMBER_OF_DOORS);  
-        waitForElementAndSendKeys(element_1, doorCount, 5); 
-    }
-    
-    
-    
-    // Failed method
-    public void failTest() {
-        if (driver == null) {
-            throw new IllegalStateException("WebDriver is not initialized");
-        }
-
-        try {
-            // Attempt to find and click the element
-            WebElement element = driver.findElement(Locators.NEXT_STEP);
-            element.click(); // This will throw NoSuchElementException if the element is not found
-            System.out.println("Element clicked successfully.");
-        } catch (NoSuchElementException e) {
-            // Assert failure if element is not found
-            Assert.fail("Expected element not found: " + Locators.NEXT_STEP);
-        }
-    }
-
-}
