@@ -18,41 +18,7 @@ public class RequestACallPage_Action extends BaseFunctions {
         super(); // Call the BaseFunctions constructor
         this.driver = driver; // Set the driver
     }
-
-    public void launchUrl(String url) {
-        if (driver == null) {
-            throw new IllegalStateException("WebDriver is not initialized");
-        }
-        if (url != null && !url.isEmpty()) {
-            driver.get(url);
-        } else {
-            throw new IllegalArgumentException("URL is null or empty.");
-        }
-    }
-    
-    // Verify element present using locators 
-    public void verifyElementIsPresent(By locator) {
-        if (driver == null) {
-            throw new IllegalStateException("WebDriver is not initialized");
-        }
-        WebElement element = driver.findElement(locator);
-        Assert.assertNotNull("The element is not present on the page", element);
-        Assert.assertTrue("Element is not displayed", element.isDisplayed());
-        System.out.println("Element verified: " + locator.toString());
-    }
-
-    public void clickOnIconFrameSecond() {
-        if (driver == null) {
-            throw new IllegalStateException("WebDriver is not initialized");
-        }
-
-        WebElement element = driver.findElement(Locators.ICON_FRAME_SECOND);  
-        // No need for utils, call the method from BaseFunctions directly
-        waitForElementAndClick(element, 10);  // Use method from BaseFunctions
-    }
-    
-   
-    //New 
+ 
     public void clickOnRequestACallButton()  {
     	System.out.print("Click on Request a Call button");
     	WebElement element = driver.findElement(Locators.REQUEST_A_CALL);
@@ -82,6 +48,18 @@ public class RequestACallPage_Action extends BaseFunctions {
     	System.out.print("Click on Submit Info button");
     	WebElement element = driver.findElement(Locators.SUBMIT);
     	waitForElementAndClick(element, 10);
+    }
+    
+    public boolean verifyReuestACallPageTxt() {
+        boolean flag = driver.findElement(Locators.REQUEST_A_CALL_TXT).isDisplayed();
+        return flag;
+ 
+    }
+    
+    public boolean verifySubmitTxt() {
+        boolean flag = driver.findElement(Locators.SUBMIT_TXT).isDisplayed();
+        return flag;
+ 
     }
     
 }    

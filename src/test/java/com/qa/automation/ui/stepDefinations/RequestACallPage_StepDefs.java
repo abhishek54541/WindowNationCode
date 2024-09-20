@@ -1,5 +1,7 @@
 package com.qa.automation.ui.stepDefinations;
 
+import static org.testng.Assert.assertEquals;
+
 import org.junit.Assert;
 
 import com.qa.automation.actions.HomePage_Action;
@@ -24,15 +26,15 @@ public class RequestACallPage_StepDefs extends BaseFunctions {
 
 
     @Then("Click on the Request A call button")
-    public void click_on_next() throws InterruptedException {
+    public void click_on_next()  {
         System.out.println("Attempting to click on Request A Call Button.");
         requestCallPage.clickOnRequestACallButton();
         switchToNewTab();
     }
-    
+  
     
     @Then("Enter first name {string} and last name {string} in request call page")
-    public void EnterFirstNameAndLastName(String firstName, String lastName) throws InterruptedException {
+    public void EnterFirstNameAndLastName(String firstName, String lastName)  {
     	requestCallPage.enterFirstNameAndLastNameinRequestaCallPage(firstName, lastName);
 
     }
@@ -49,6 +51,18 @@ public class RequestACallPage_StepDefs extends BaseFunctions {
         requestCallPage.enterEmailAndPhoneNumberAndZipCode(email, phoneNumber, zipCode);
         requestCallPage.clickOnSubmitInfoBtn();
    
+    }
+    
+    @Then ("User is landed to Request a Call Page")
+    public void verify_Request_A_Call_screen()
+    {
+        assertEquals(requestCallPage.verifyReuestACallPageTxt(), true);
+    }
+    
+    @Then ("User is landed to Submit form page")
+    public void verify_Dasboard_screen()
+    {
+        assertEquals(requestCallPage.verifySubmitTxt(), true);
     }
     
 
