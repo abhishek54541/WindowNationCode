@@ -1,4 +1,4 @@
-Feature: DCE Test Cases
+Feature: [CUCABLE:FEATURE]
 
   @navigate_homepage
   Scenario: Navigate to WindowNation homepage
