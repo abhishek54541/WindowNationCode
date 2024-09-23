@@ -131,6 +131,9 @@
 							<value>io.qameta.allure.junit4.AllureJunit4</value>
 						</property>
 					</properties>
+					<includes>
+			                    <include>**/CucableJavaTemplate.java</include>
+			                </includes>
 				</configuration>
 				<dependencies>
 					<dependency>
