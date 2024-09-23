@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
     // Update the feature path correctly
-    features = {"src/test/resources/features/test.feature"},
+    features = {"[CUCABLE:FEATURE]"},
     // Point to the package where step definitions are located
     glue = {"com.qa.automation.ui.stepDefinations"},
     // Ensure the Allure plugin is added
