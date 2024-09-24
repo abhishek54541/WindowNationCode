@@ -73,7 +73,8 @@ public class DriverManager {
                 WebDriverManager.chromedriver().setup();
                 ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.addArguments("--start-maximized", "--disable-notifications", "--ignore-ssl-errors=yes",
-                        "--ignore-certificate-errors", "--incognito");
+                        "--ignore-certificate-errors");
+//                , "--incognito"
                 chromeOptions.setExperimentalOption("prefs", new HashMap<String, Object>() {{
                     put("download.default_directory", Paths.get("downloadedData").toAbsolutePath().toString());
                 }});

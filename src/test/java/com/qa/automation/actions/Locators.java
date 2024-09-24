@@ -21,7 +21,10 @@ public class Locators {
 	 public static final By ZIPCODE = By.xpath("//input[@id='zipcode']");
 	 public static final By ENTER_NUMBER_OF_WINDOWS = By.xpath("//input[@id='count']");
 	 public static final By ENTER_NUMBER_OF_DOORS = By.xpath("//input[@id='count']");
-	 
+	 public static final By START_PROJECT_TIMELINE_IN_MONTHS = By.xpath("//p[contains(text(),' 0-3 months ')]");
+	 public static final By  REASON_TO_REPLACE_WINDOW= By.xpath("//p[contains(text(),' My windows leak or get condensation  ')]");
+	 public static final By RESIDENCE = By.xpath("//*[contains(text(),'My primary residence')]");
+	 public static final By HOME_OWNER = By.xpath("//*[contains(text(),'I am the only homeowner')]");
 	 
 	 public static final By ICON_FRAME_THIRD = By.xpath("(//span[@class='icon-frame'])[9]");
 	 

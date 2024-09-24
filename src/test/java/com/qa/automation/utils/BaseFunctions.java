@@ -69,6 +69,17 @@ public class BaseFunctions {
 	}
 	
 	
+	public void sendKeysAndTab(WebElement element, String text, int timeoutInSeconds) {
+	    // Initialize WebDriverWait
+	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
+	    // Wait until the element is visible
+	    wait.until(ExpectedConditions.visibilityOf(element));
+	    // Clear any existing text (optional)
+	    element.clear();
+	    // Send the provided text and simulate pressing the "Enter" key
+	    element.sendKeys(text, Keys.TAB);
+	}
+	
 	
 	public void waitForElementAndClick(WebElement element, int timeoutInSeconds) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
@@ -478,7 +489,7 @@ public class BaseFunctions {
 		logMessage("Switched back to original window");
 	}
  
-	protected void scrollDown(By elem) {
+	public void scrollDown(By elem) {
 		WebElement element = element(elem);
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
 	}
@@ -727,4 +738,42 @@ public class BaseFunctions {
             return "";
         }
     }
+	
+	// Scroll until found
+	public void scrollUntilElementFound(By elem) {
+	    boolean elementFound = false;
+	    int maxScrollAttempts = 5; // You can adjust this number based on how many attempts you want
+	    int attempt = 0;
+
+	    while (!elementFound && attempt < maxScrollAttempts) {
+	        try {
+	            // Try to find the element
+	            WebElement element = driver.findElement(elem);
+	            if (element.isDisplayed()) {
+	                // Scroll the element into view if found
+	                ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+	                elementFound = true;
+	                System.out.println("Element found and scrolled into view.");
+	            }
+	        } catch (NoSuchElementException e) {
+	            // Scroll down slightly if element is not found and attempt again
+	            ((JavascriptExecutor) driver).executeScript("window.scrollBy(0, 500);");
+	            System.out.println("Scrolling down to search for element...");
+	        }
+	        attempt++;
+	    }
+
+	    if (!elementFound) {
+	        System.out.println("Element not found after " + maxScrollAttempts + " scroll attempts.");
+	    }
+	}
+	
+	// Scroll and click on located element
+	public void scrollAndClick(By locator) {
+	    WebElement element = driver.findElement(locator);
+	    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);  // Scroll the element into view
+	    element.click();
+	}
+
+
 }
