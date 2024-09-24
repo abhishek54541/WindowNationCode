@@ -53,7 +53,7 @@
 					template -->
 					<sourceRunnerTemplateFile>
 						src/test/java/com/qa/automation/tests/CucableJavaTemplate.java
-                    </sourceRunnerTemplateFile>
+                    			</sourceRunnerTemplateFile>
 					<!--<sourceRunnerTemplateFile>src/test/resources/cucable.template</sourceRunnerTemplateFile>-->
 					<!-- process all features in the given directory -->
 					<sourceFeatures>src/test/resources/features</sourceFeatures>
@@ -122,7 +122,6 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.18</version>
 				<configuration>
-					<skipTests>true</skipTests>
 					<testFailureIgnore>false</testFailureIgnore>
 					<argLine>
 						-javaagent:"${settings.localRepository}\org\aspectj\aspectjweaver\${aspectj.version}\aspectjweaver-${aspectj.version}.jar"
