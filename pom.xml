@@ -5,6 +5,7 @@
 	<groupId>com.qa.automation.tests</groupId>
 	<artifactId>Cucumber-Tests</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.11.0</java.version>
@@ -20,7 +21,7 @@
 		<snakeyaml.version>1.30</snakeyaml.version>
 		<json-simple.version>1.1.1</json-simple.version>
 		<hamcrest.version>1.3</hamcrest.version>
-		<cucumber.version>6.9.0</cucumber.version>
+		<cucumber.version>6.10.4</cucumber.version>
 		<maven.failsafe.plugin.version>3.0.0-M5</maven.failsafe.plugin.version>
 		<maven.jar.plugin.version>3.2.1</maven.jar.plugin.version>
 		<maven.compiler.plugin.version>3.10.1</maven.compiler.plugin.version>
@@ -38,7 +39,7 @@
 			<plugin>
 				<groupId>com.trivago.rta</groupId>
 				<artifactId>cucable-plugin</artifactId>
-				<version>1.11.0</version>
+				<version>1.9.0</version>
 				<executions>
 					<execution>
 						<id>generate-test-resources</id>
@@ -49,326 +50,88 @@
 					</execution>
 				</executions>
 				<configuration>
-					<!-- This can be either a Java class file or a text based
-					template -->
-					<sourceRunnerTemplateFile>
-						src/test/java/com/qa/automation/tests/CucableJavaTemplate.java
-                    			</sourceRunnerTemplateFile>
-					<!--<sourceRunnerTemplateFile>src/test/resources/cucable.template</sourceRunnerTemplateFile>-->
-					<!-- process all features in the given directory -->
-					<sourceFeatures>src/test/resources/features</sourceFeatures>
-					<!-- process a specific feature file in the given directory -->
-					<!--<sourceFeatures>src/test/resources/features/testfeature/MyTest9.feature</sourceFeatures>-->
-					<!-- process multiple feature files -->
-					<!--<sourceFeatures>-->
-					<!--src/test/resources/features/testfeature2,-->
-					<!--src/test/resources/features/testfeature/MyTest8.feature-->
-					<!--</sourceFeatures>-->
-					<!-- process a text file containing paths to features and
-					line numbers (as it is written by the Cucumber rerun
-					formatter) -->
-					<!--
-					<sourceFeatures>@src/test/resources/cucumber-feature-list.txt</sourceFeatures> -->
-					<!-- process a specific feature file and specific line
-					numbers in the given directory -->
-					<!--<sourceFeatures>src/test/resources/features/testfeature/MyTest1.feature:8:19</sourceFeatures>-->
-					<generatedFeatureDirectory>${generated.feature.directory}</generatedFeatureDirectory>
-					<generatedRunnerDirectory>${generated.runner.directory}</generatedRunnerDirectory>
-
-					<includeScenarioTags>${tag}</includeScenarioTags>
-
-
-					<numberOfTestRuns>1</numberOfTestRuns>
-
-
-					<!-- optional: custom data that is available in Cucable
-					placeholders in a template -->
-					<!--<customPlaceholders>-->
-					<!--<comment>This should appear inside the template</comment>-->
-					<!--</customPlaceholders>-->
-					<!-- optional: Cucumber tag expression to include or exclude
-					scenarios with certain tags (see
-					https://docs.cucumber.io/cucumber/api/#tag-expressions) -->
-					<!--<includeScenarioTags>@scenario1Tag1</includeScenarioTags>-->
-					<!--<includeScenarioTags>not @skipMe</includeScenarioTags>-->
-					<!--<includeScenarioTags>(@scenario1Tag1 or @scenario1Tag2) and not @skipMe</includeScenarioTags>-->
-					<!--optional: A comma separated list of strings matching a scenario name, either completely or partially. Please see "name" option in Cucumber command-line options-->
-					<!--<scenarioNames>Scenario 1, Scenario 2, Mulțumesc</scenarioNames>-->
-					<!-- optional: change parallelization mode of Cucable
-					(default: 'scenarios')-->
-					<!--<parallelizationMode>scenarios</parallelizationMode>-->
-					<!--<parallelizationMode>features</parallelizationMode>-->
-					<!-- optional: number of test runs to create runners and
-					features multiple times
-                         if set to a number greater than 1 -->
-					<!--<numberOfTestRuns>1</numberOfTestRuns>-->
-					<!-- optional: generate a fixed number of runners and
-					distribute all features round-robin.
-                     This can only be used if desiredNumberOfFeaturesPerRunner is NOT used! -->
-					<!--<desiredNumberOfRunners>2</desiredNumberOfRunners>-->
-					<!-- optional: distribute a fixed number features per runner
-					round-robin.
-                    This can only be used if desiredNumberOfRunners is NOT used! -->
-					<!--<desiredNumberOfFeaturesPerRunner>4</desiredNumberOfFeaturesPerRunner>-->
-					<!-- optional: Cucable log level -->
-					<!--<logLevel>default</logLevel>-->
-					<!--<logLevel>compact</logLevel>-->
-					<!--<logLevel>minimal</logLevel>-->
-					<!--<logLevel>off</logLevel>-->
+					<sourceRunnerTemplateFile>src/test/java/com/qa/automation/tests/CucableJavaTemplate.template</sourceRunnerTemplateFile>
+					<sourceFeatures>src/test/resources/features/test.feature</sourceFeatures>
+					<generatedFeatureDirectory>${project.build.directory}/parallel/features</generatedFeatureDirectory>
+		            <generatedRunnerDirectory>${project.build.directory}/parallel/runners</generatedRunnerDirectory>
 				</configuration>
 			</plugin>
 			<plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>${maven.build.helper.plugin.version}</version>
+        <executions>
+            <execution>
+                <id>add-test-source</id>
+                <phase>generate-test-sources</phase>
+                <goals>
+                    <goal>add-test-source</goal>
+                </goals>
+                <configuration>
+                  <sources>
+                    <source>${project.build.directory}/parallel/runners</source>
+                  </sources>
+                </configuration>   
+            </execution>
+        </executions> 
+    </plugin>
+    		<plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>${maven.build.helper.plugin.version}</version> <!-- Use the latest version -->
+                <executions>
+                    <execution>
+                        <id>generate-xml</id>
+                        <phase>process-source</phase> <!-- Run before generating test sources -->
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>com.qa.automation.tests.DynamicXMLGenerator</mainClass> <!-- Replace with your main class -->
+                            <arguments>
+                                <argument>testng.xml</argument> <!-- Argument to pass filename -->
+                                <argument>3</argument> <!-- Example: Number of scenarios -->
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <!-- Ensure the dependencies required by your Java file are specified here -->
+                    <dependency>
+			            <groupId>javax.xml.parsers</groupId>
+			            <artifactId>jaxp-api</artifactId>
+			            <version>1.4.5</version>
+			        </dependency>
+			        
+			        <!-- Implementation of XML Transformer -->
+			        <dependency>
+			            <groupId>xalan</groupId>
+			            <artifactId>xalan</artifactId>
+			            <version>2.7.2</version>
+			        </dependency>
+        
+                </dependencies>
+            </plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.18</version>
+				<version>3.0.0-M5</version>
 				<configuration>
-					<testFailureIgnore>false</testFailureIgnore>
-					<argLine>
-						-javaagent:"${settings.localRepository}\org\aspectj\aspectjweaver\${aspectj.version}\aspectjweaver-${aspectj.version}.jar"
-					</argLine>
-					<properties>
-						<property>
-							<name>listener</name>
-							<value>io.qameta.allure.junit4.AllureJunit4</value>
-						</property>
-					</properties>
-					<includes>
-			                    <include>**/CucableJavaTemplate.java</include>
-			                </includes>
-				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>org.aspectj</groupId>
-						<artifactId>aspectjweaver</artifactId>
-						<version>${aspectj.version}</version>
-					</dependency>
-					<dependency>
-						<groupId>org.apache.maven.surefire</groupId>
-						<artifactId>surefire-junit47</artifactId>
-						<version>2.18</version>
-					</dependency>
-					<!--
-					https://mvnrepository.com/artifact/org.slf4j/slf4j-simple -->
-					<dependency>
-						<groupId>org.slf4j</groupId>
-						<artifactId>slf4j-simple</artifactId>
-						<version>2.0.11</version>
-					</dependency>
-
-					<!--
-					https://mvnrepository.com/artifact/org.bouncycastle/bcpkix-jdk15on -->
-					<dependency>
-						<groupId>org.bouncycastle</groupId>
-						<artifactId>bcpkix-jdk15on</artifactId>
-						<version>1.64</version>
-					</dependency>
-
-
-					<dependency>
-					    <groupId>com.fasterxml.jackson.core</groupId>
-					    <artifactId>jackson-databind</artifactId>
-					    <version>2.12.5</version>
-					</dependency>
-					<!--
-					https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on -->
-					<dependency>
-						<groupId>org.bouncycastle</groupId>
-						<artifactId>bcprov-jdk15on</artifactId>
-						<version>1.64</version>
-					</dependency>
-
-
-					<!--
-					https://mvnrepository.com/artifact/commons-codec/commons-codec -->
-					<dependency>
-						<groupId>commons-codec</groupId>
-						<artifactId>commons-codec</artifactId>
-						<version>1.15</version>
-					</dependency>
-
-
-					<!--
-					https://mvnrepository.com/artifact/org.apache.commons/commons-compress -->
-					<dependency>
-						<groupId>org.apache.commons</groupId>
-						<artifactId>commons-compress</artifactId>
-						<version>1.21</version>
-					</dependency>
-
-
-					<!--
-					https://mvnrepository.com/artifact/commons-io/commons-io -->
-					<dependency>
-						<groupId>commons-io</groupId>
-						<artifactId>commons-io</artifactId>
-						<version>2.6</version>
-					</dependency>
-
-
-					<!--
-					https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
-					<dependency>
-						<groupId>org.apache.commons</groupId>
-						<artifactId>commons-lang3</artifactId>
-						<version>3.12.0</version>
-					</dependency>
-
-					<dependency>
-						<groupId>io.cucumber</groupId>
-						<artifactId>tag-expressions</artifactId>
-						<version>4.1.0</version>
-					</dependency>
-					<!-- https://mvnrepository.com/artifact/org.brotli/dec -->
-					<dependency>
-						<groupId>org.brotli</groupId>
-						<artifactId>dec</artifactId>
-						<version>0.1.2</version>
-					</dependency>
-
-
-					<!--
-					https://mvnrepository.com/artifact/com.github.docker-java/docker-java -->
-					<dependency>
-						<groupId>com.github.docker-java</groupId>
-						<artifactId>docker-java</artifactId>
-						<version>3.2.13</version>
-					</dependency>
-
-
-					<!--
-					https://mvnrepository.com/artifact/com.github.docker-java/docker-java-api -->
-					<dependency>
-						<groupId>com.github.docker-java</groupId>
-						<artifactId>docker-java-api</artifactId>
-						<version>3.2.13</version>
-					</dependency>
-
-
-					<!--
-					https://mvnrepository.com/artifact/com.github.docker-java/docker-java-core -->
-					<dependency>
-						<groupId>com.github.docker-java</groupId>
-						<artifactId>docker-java-core</artifactId>
-						<version>3.2.13</version>
-					</dependency>
-
-
-					<!--
-					https://mvnrepository.com/artifact/com.github.docker-java/docker-java-transport -->
-					<dependency>
-						<groupId>com.github.docker-java</groupId>
-						<artifactId>docker-java-transport</artifactId>
-						<version>3.2.13</version>
-					</dependency>
-
-
-					<!--
-					https://mvnrepository.com/artifact/com.github.docker-java/docker-java-transport-httpclient5 -->
-					<dependency>
-						<groupId>com.github.docker-java</groupId>
-						<artifactId>docker-java-transport-httpclient5</artifactId>
-						<version>3.2.13</version>
-					</dependency>
-
-
-					<!--
-					https://mvnrepository.com/artifact/com.google.code.gson/gson -->
-					<dependency>
-						<groupId>com.google.code.gson</groupId>
-						<artifactId>gson</artifactId>
-						<version>2.10</version>
-					</dependency>
-
-
-					<!--
-					https://mvnrepository.com/artifact/com.google.guava/guava -->
-					<dependency>
-						<groupId>com.google.guava</groupId>
-						<artifactId>guava</artifactId>
-						<version>19.0</version>
-					</dependency>
-
-
-					<!--
-					https://mvnrepository.com/artifact/org.apache.httpcomponents.client5/httpclient5 -->
-					<dependency>
-						<groupId>org.apache.httpcomponents.client5</groupId>
-						<artifactId>httpclient5</artifactId>
-						<version>5.1.3</version>
-					</dependency>
-
-
-					<!--
-					https://mvnrepository.com/artifact/org.apache.httpcomponents.core5/httpcore5 -->
-					<dependency>
-						<groupId>org.apache.httpcomponents.core5</groupId>
-						<artifactId>httpcore5</artifactId>
-						<version>5.1.3</version>
-					</dependency>
-
-
-					<!--
-					https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->
-					<dependency>
-						<groupId>com.fasterxml.jackson.core</groupId>
-						<artifactId>jackson-annotations</artifactId>
-						<version>2.10.3</version>
-					</dependency>
-
-
-					<!--
-					https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
-					<dependency>
-						<groupId>com.fasterxml.jackson.core</groupId>
-						<artifactId>jackson-core</artifactId>
-						<version>2.10.3</version>
-					</dependency>
-
-
-					<!--
-					https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
-					<dependency>
-						<groupId>com.fasterxml.jackson.core</groupId>
-						<artifactId>jackson-databind</artifactId>
-						<version>2.10.3</version>
-					</dependency>
-
-
-					<!--
-					https://mvnrepository.com/artifact/org.slf4j/jcl-over-slf4j -->
-					<dependency>
-						<groupId>org.slf4j</groupId>
-						<artifactId>jcl-over-slf4j</artifactId>
-						<version>1.7.30</version>
-					</dependency>
-
-
-					<!-- https://mvnrepository.com/artifact/net.java.dev.jna/jna -->
-					<dependency>
-						<groupId>net.java.dev.jna</groupId>
-						<artifactId>jna</artifactId>
-						<version>5.8.0</version>
-					</dependency>
-
-
-					<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
-					<dependency>
-						<groupId>org.slf4j</groupId>
-						<artifactId>slf4j-api</artifactId>
-						<version>2.0.3</version>
-					</dependency>
-
-
-					<!--
-					https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
-					<dependency>
-						<groupId>io.github.bonigarcia</groupId>
-						<artifactId>webdrivermanager</artifactId>
-						<version>5.7.0</version>
-					</dependency>
-
-				</dependencies>
+	                <includes>
+	                    <include>**/*Template.template</include>
+	                </includes>
+                <forkCount>1</forkCount>
+                <reuseForks>true</reuseForks>
+                <parallel>methods</parallel>
+                <threadCount>4</threadCount>
+            </configuration>
 			</plugin>
+			<plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-surefire-report-plugin</artifactId>
+			    <version>3.0.0-M5</version>
+			</plugin>
+
 			<plugin>
 				<groupId>io.qameta.allure</groupId>
 				<artifactId>allure-maven</artifactId>
@@ -408,25 +171,6 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>build-helper-maven-plugin</artifactId>
-				<version>${maven.build.helper.plugin.version}</version>
-				<executions>
-					<execution>
-						<id>add-test-source</id>
-						<phase>generate-test-sources</phase>
-						<goals>
-							<goal>add-test-source</goal>
-						</goals>
-						<configuration>
-							<sources>
-								<source>${generated.runner.directory}</source>
-							</sources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
 				<version>${maven.failsafe.plugin.version}</version>
@@ -437,12 +181,19 @@
 						<goals>
 							<goal>integration-test</goal>
 						</goals>
-					</execution>
-					
+					</execution>	
 				</executions>
 				<configuration>
 					<forkCount>${runner}</forkCount>
-					<testFailureIgnore>true</testFailureIgnore>
+					<testFailureIgnore>false</testFailureIgnore>
+					<includes>
+                        <include>**/*IT.class</include>
+			        	<include>**/*IntegrationTest.class</include>
+			        	<include>**/*Test.class</include>
+                    </includes>
+                    <suiteXmlFiles>
+		                <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile> <!-- Ensure this path is correct -->
+		            </suiteXmlFiles>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -486,14 +237,11 @@
 		    <version>2.15.0</version>
 		    <scope>test</scope>
 		</dependency>
-
-
-		<!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-junit -->
 		<dependency>
-			<groupId>io.cucumber</groupId>
-			<artifactId>cucumber-junit</artifactId>
-			<version>${cucumber.version}</version>
-			<!--<scope>test</scope>-->
+		    <groupId>io.qameta.allure</groupId>
+		    <artifactId>allure-junit4</artifactId>
+		    <version>2.15.0</version>
+		    <scope>test</scope>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.trivago.rta/cucable-plugin -->
 		<dependency>
@@ -581,7 +329,7 @@
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
-			<version>7.6.1</version>
+			<version>7.3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.jcabi</groupId>
@@ -603,7 +351,7 @@
 		<dependency>
 			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-testng</artifactId>
-			<version>7.3.4</version>
+			<version>${cucumber.version}</version>
 		</dependency>
 		<!--Allure Cucumber Dependency-->
 		<dependency>
@@ -611,6 +359,16 @@
 			<artifactId>webdrivermanager</artifactId>
 			<version>5.5.2</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+		    <groupId>ch.qos.logback</groupId>
+		    <artifactId>logback-classic</artifactId>
+		    <version>1.2.3</version> <!-- Check for the latest version -->
+		</dependency>
+		<dependency>
+		    <groupId>org.slf4j</groupId>
+		    <artifactId>slf4j-api</artifactId>
+		    <version>1.7.30</version> <!-- Match this version with logback -->
 		</dependency>
 	</dependencies>
 </project>
