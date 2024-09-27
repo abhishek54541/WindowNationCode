@@ -68,9 +68,8 @@ public class HomePage_Action extends BaseFunctions {
     
     public void enterPrimaryEmailAndPrimaryContact(String primaryEmail,String primaryContact) {
     	// Get element text
-    	String actualText = getElementText(Locators.GET_CONTACT_INFO_TEXT);
-        System.out.println("Text of the element: " + actualText);
-        //
+//    	String actualText = getElementText(Locators.GET_CONTACT_INFO_TEXT);
+//        System.out.println("Text of the element: " + actualText);
     	System.out.print("Enter Primary email and primary contact");
     	WebElement element = driver.findElement(Locators.PRIMARY_EMAIL);  // Replace Locators.INPUT_FIELD with your actual locator
         waitForElementAndSendKeys(element, primaryEmail, 10);  //

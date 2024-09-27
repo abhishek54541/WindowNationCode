@@ -54,7 +54,7 @@ public class HomePage_StepDefs extends BaseFunctions {
     public void iEnterFirstNameAndLastName(String firstName, String lastName) {
         homePageAction.enterFirstNameAndLastName(firstName, lastName);
 //        homePageAction.clickOnElementWithText("Print");
-        homePageAction.clickOnElement("text", "Print");
+//        homePageAction.clickOnElement("text", "Print");
         homePageAction.clickOnNextToProceedform();
     }
     
@@ -96,6 +96,12 @@ public class HomePage_StepDefs extends BaseFunctions {
     @Then("click on how soon you start project list")
     public void click_on_start_project_span() throws InterruptedException {
     	homePageAction.clickOnStartTimeSpanProject();
+    	homePageAction.clickOnNextToProceedform();
+    }
+    
+    @Then("How did you hear about us")
+    public void enter_how_do_you_here() {
+    	homePageAction.clickOnElement("text", "Print");
     	homePageAction.clickOnNextToProceedform();
     }
 

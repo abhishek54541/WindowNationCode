@@ -14,7 +14,8 @@ Feature: [CUCABLE:FEATURE]
     Then Enter Address1 "testing street 1" address2 "testing street 2" city "New York" state "NY" and zipcode "10001"
     Then select homeowner from two options I am the only home owner and There are multiple homeowners
     Then Enter windows count "2" and doors count "3"
-    Then click on how soon you start project list 
+    Then click on how soon you start project list
+    Then How did you hear about us 
 
   @intentional_failure
   Scenario: Trigger intentional failure for testing
