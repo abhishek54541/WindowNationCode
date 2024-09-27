@@ -4,7 +4,8 @@
     <test name="Cucumber Tests">
         <classes>
             <class name="Runner_test_scenario001_run001_IT"/>
-
+            <class name="Runner_test_scenario002_run001_IT"/>
+            <class name="Runner_test_scenario003_run001_IT"/>
         </classes>
     </test>
 </suite>
