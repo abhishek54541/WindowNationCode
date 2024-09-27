@@ -1,13 +1,11 @@
 package com.qa.automation.tests;
 
-import io.cucumber.junit.Cucumber;
-import io.cucumber.junit.CucumberOptions;
-import org.junit.runner.RunWith;
+import io.cucumber.testng.AbstractTestNGCucumberTests;
+import io.cucumber.testng.CucumberOptions;
 
-@RunWith(Cucumber.class)    
-@CucumberOptions( features = {"@target/failedrerun.txt"}, glue = {"com.qa.automation.ui.stepDefinations"},
+@CucumberOptions(features = {"@target/failedrerun.txt"}, 
+                 glue = {"com.qa.automation.ui.stepDefinations"},
                  plugin = {})
-    
-public class FailedRunnerTests {
-    
+public class FailedRunnerTests extends AbstractTestNGCucumberTests {
+    // This class serves as the TestNG runner for the failed tests
 }
