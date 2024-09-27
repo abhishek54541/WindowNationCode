@@ -54,7 +54,7 @@ public class HomePage_StepDefs extends BaseFunctions {
     public void iEnterFirstNameAndLastName(String firstName, String lastName) {
         homePageAction.enterFirstNameAndLastName(firstName, lastName);
 //        homePageAction.clickOnElementWithText("Print");
-        homePageAction.clickOnElement("text", "Print");
+//        homePageAction.clickOnElement("text", "Print");
         homePageAction.clickOnNextToProceedform();
     }
     
@@ -71,24 +71,38 @@ public class HomePage_StepDefs extends BaseFunctions {
     }
     
     @Then("Enter Address1 {string} address2 {string} city {string} state {string} and zipcode {string}")
-    public void enter_quote_Home_address(String address1, String address2, String city, String state, String zipcode) {
+    public void enter_quote_Home_address(String address1, String address2, String city, String state, String zipcode) throws InterruptedException {
         // Call the method from homePageAction to enter address details
         homePageAction.enterAddress(address1, address2, city, state, zipcode);
-        homePageAction.clickOnElement("anotherText", "Rental property");
+        
+//        homePageAction.clickOnElement("anotherText", "Rental property");
         homePageAction.clickOnNextToProceedform();
     }
     
     @Then("select homeowner from two options I am the only home owner and There are multiple homeowners")
     public void select_homeowner_details() {
-    	homePageAction.clickOnElement("anotherText", "I am the only homeowner");
-    	System.out.print("1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
+    	homePageAction.clickOnHomeOwnerButton();
     	homePageAction.clickOnNextToProceedform();
-    	System.out.print("2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222");
     }
     
     @Then("Enter windows count {string} and doors count {string}")
-    public void enter_count_of_windows_and_doors(String windowCount, String doorCount) {
+    public void enter_count_of_windows_and_doors(String windowCount, String doorCount) throws InterruptedException {
     	 homePageAction.enterNumberOfWindowsAndDoors(windowCount,doorCount);
+    	 
+    	 homePageAction.clickOnReasonToReplaceWindow();
+    	 homePageAction.clickOnNextToProceedform();
+    }
+    
+    @Then("click on how soon you start project list")
+    public void click_on_start_project_span() throws InterruptedException {
+    	homePageAction.clickOnStartTimeSpanProject();
+    	homePageAction.clickOnNextToProceedform();
+    }
+    
+    @Then("How did you hear about us")
+    public void enter_how_do_you_here() {
+    	homePageAction.clickOnElement("text", "Print");
+    	homePageAction.clickOnNextToProceedform();
     }
 
     @Then("Force an intentional failure")

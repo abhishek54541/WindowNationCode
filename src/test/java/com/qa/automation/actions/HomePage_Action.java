@@ -1,6 +1,7 @@
 package com.qa.automation.actions;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import com.qa.automation.utils.BaseFunctions;
@@ -45,7 +46,7 @@ public class HomePage_Action extends BaseFunctions {
         if (driver == null) {
             throw new IllegalStateException("WebDriver is not initialized");
         }
-
+        scrollUntilElementFound(Locators.ICON_FRAME_SECOND);
         WebElement element = driver.findElement(Locators.ICON_FRAME_SECOND);  
         // No need for utils, call the method from BaseFunctions directly
         waitForElementAndClick(element, 10);  // Use method from BaseFunctions
@@ -67,9 +68,8 @@ public class HomePage_Action extends BaseFunctions {
     
     public void enterPrimaryEmailAndPrimaryContact(String primaryEmail,String primaryContact) {
     	// Get element text
-    	String actualText = getElementText(Locators.GET_CONTACT_INFO_TEXT);
-        System.out.println("Text of the element: " + actualText);
-        //
+//    	String actualText = getElementText(Locators.GET_CONTACT_INFO_TEXT);
+//        System.out.println("Text of the element: " + actualText);
     	System.out.print("Enter Primary email and primary contact");
     	WebElement element = driver.findElement(Locators.PRIMARY_EMAIL);  // Replace Locators.INPUT_FIELD with your actual locator
         waitForElementAndSendKeys(element, primaryEmail, 10);  //
@@ -119,31 +119,64 @@ public class HomePage_Action extends BaseFunctions {
     }
     
     // Enter address for eg - "Address1,Address2,city,State,zipcode"
-    public void enterAddress(String address1,String address2,String city,String state,String zipcode) {
+    public void enterAddress(String address1,String address2,String city,String state,String zipcode) throws InterruptedException {
     	System.out.print("Enter Address (AddressCity, State, Zipcode)");
     	WebElement element = driver.findElement(Locators.STREET_ADDRESS_1); 
-        waitForElementAndSendKeys(element, address1, 20);  
+        waitForElementAndSendKeys(element, address1, 20); 
+        sendKeysAndEnter(element, state, 10);
+        sendKeysAndTab(element, state, 10);
+//        Thread.sleep(5000);
         WebElement element_1 = driver.findElement(Locators.STREET_ADDRESS_2);  
         waitForElementAndSendKeys(element_1, address2, 10); 
+        sendKeysAndTab(element, state, 10);
+//        Thread.sleep(5000);
         WebElement element_2 = driver.findElement(Locators.CITY); 
         waitForElementAndSendKeys(element_2, city, 10);
+        sendKeysAndTab(element, state, 10);
+//        Thread.sleep(5000);
         WebElement element_3 = driver.findElement(Locators.STATE); 
         sendKeysAndEnter(element_3, state, 10);
+//        Thread.sleep(5000);
         WebElement element_4 = driver.findElement(Locators.ZIPCODE); 
         waitForElementAndSendKeys(element_4, zipcode, 10);
+//        Thread.sleep(5000);
+        WebElement element_5 = driver.findElement(Locators.RESIDENCE);
+        element_5.click();
         
     }
     
-    public void enterNumberOfWindowsAndDoors(String windowCount, String doorCount ) {
+    public void enterNumberOfWindowsAndDoors(String windowCount, String doorCount ) throws InterruptedException {
     	// Count of windows and doors
     	WebElement element = driver.findElement(Locators.ENTER_NUMBER_OF_WINDOWS); 
         waitForElementAndSendKeys(element, windowCount, 5);
         clickOnNextToProceedform();
+        Thread.sleep(10000);
         WebElement element_1 = driver.findElement(Locators.ENTER_NUMBER_OF_DOORS);  
         waitForElementAndSendKeys(element_1, doorCount, 5); 
+        Thread.sleep(10000);
+        clickOnNextToProceedform();
     }
     
+    public void clickOnHomeOwnerButton() {
+    	WebElement element = driver.findElement(Locators.HOME_OWNER); 
+    	element.click();
+    }
     
+    public void clickOnReasonToReplaceWindow() throws InterruptedException {
+    	Thread.sleep(10000);
+    	WebElement element = driver.findElement(Locators.REASON_TO_REPLACE_WINDOW); 
+    	element.click();
+    	
+    }
+    
+    // click on time span for eg : 0-3 months, 3-6 months and 6-9 months
+    public void clickOnStartTimeSpanProject() throws InterruptedException {
+    	Thread.sleep(10000);
+    	WebElement element = driver.findElement(Locators.START_PROJECT_TIMELINE_IN_MONTHS);
+    	Thread.sleep(10000);
+    	element.click();
+    	
+    }
     
     // Failed method
     public void failTest() {
@@ -161,5 +194,5 @@ public class HomePage_Action extends BaseFunctions {
             Assert.fail("Expected element not found: " + Locators.NEXT_STEP);
         }
     }
-
+    
 }
