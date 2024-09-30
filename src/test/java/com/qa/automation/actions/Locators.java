@@ -28,6 +28,15 @@ public class Locators {
 	 
 	 public static final By ICON_FRAME_THIRD = By.xpath("(//span[@class='icon-frame'])[9]");
 	 
+	//Request a Call Page
+	 public static final By REQUEST_A_CALL = By.xpath("//a[@class='request-call']");
+	 public static final By PHONE_NUMBER = By.xpath("//input[@id='phoneNumber']");
+	 public static final By EMAIL = By.xpath("//input[@id='email']");
+	 public static final By ZIP_CODE = By.xpath("//input[@id='zipcode']");
+	 public static final By SUBMIT = By.xpath("//button[contains(text(),'Submit Info')]");
+	 public static final By REQUEST_A_CALL_TXT = By.xpath("//h2[contains(text(),'Provide a few details so we can call you to get started')]");
+	 public static final By SUBMIT_TXT = By.xpath("//h4[contains(text(),'Your form was submitted successfully!')]");
+	 
 	 
 	 public static By getDynamicXPathHowYouKnowBtn(String text) {
 		 return By.xpath("//div[contains(text(),'" + text + "')]");
